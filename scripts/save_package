@@ -1,0 +1,5 @@
+#!/bin/bash
+cd ${ANANAS}
+source ./scripts/cleanup_package $1
+tar cfv ../attic/$1_`date +%m%d%y`.tar $1
+source ./scripts/build_package $1

@@ -1,0 +1,36 @@
+/** Script to register data ntple in AnaNaS samples.txt file
+ * Event count is computed from the ntuple file. Dummy values 1 is
+ * used for cross section and factor number.
+ * The script looks for direction runXXXXX, the directory name is used
+ * for the sample name.
+ *
+ * Author: Ph Gras April 28, 10
+ */
+
+#!/bin/bash
+
+myself=`readlink -f "$0"`
+mydir=`dirname "$myself"`
+
+SAMPLE_CAT=/home/pgras/cmssw/ananas/ananas-201004/workdir/config/samples.txt
+
+for d in run*; do
+    [ -d "$d" ] || continue
+    s=`grep "^$d[[:space:]]" $SAMPLE_CAT`
+    if [ $? = 0 ]; then
+        cat <<EOF
+Directory $d already in $SAMPLE_CAT:
+$s
+EOF
+    else
+        nevts=`cd "$d" && "$mydir/aaaDirEvtCnt"`
+        echo $nevts | grep -q '^[[:digit:]]\+$'
+        if [ $? != 0 ]; then
+            echo "Failed to get number of events in directory $d!" 1>&2
+            nevts=-1
+        fi
+        s="$d	$nevts	1.	1.	/MinimumBias line automatic created with aaaUpdateSampleFile"
+        echo "$s" >> "$SAMPLE_CAT"
+        echo "$s"
+    fi
+done

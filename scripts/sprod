@@ -1,0 +1,33 @@
+#!/bin/bash
+
+analysis_() {
+    qsub -b y -q all.q -N $2__$1 -o ${ANANAS}/workdir/log -e ${ANANAS}/workdir/log analysis -a $1 -s $2 
+    sleep 5s
+}
+
+analysisN_() {
+    qsub -b y -q all.q -N $2__$1 -o ${ANANAS}/workdir/log -e ${ANANAS}/workdir/log analysis -a $1 -s $2 -n $3
+    sleep 5s
+}
+
+analysisO_() {
+    qsub -b y -q all.q -N $2__$1 -o ${ANANAS}/workdir/log -e ${ANANAS}/workdir/log analysis -a $1 -s $2 -o $3
+    sleep 5s
+}
+
+analysisON_() {
+    qsub -b y -q all.q -N $2__$1 -o ${ANANAS}/workdir/log -e ${ANANAS}/workdir/log analysis -a $1 -s $2 -n $3 -o $4
+    sleep 5s
+}
+
+
+### Examples
+
+#analysis_ VBTF_e W_en
+#analysisN_ OZee QCD_EM2030 333189
+#analysisO_ We EG_v4_Aug26_143179_p1 /home/gpfs/manip/mnt/cms/mmarionn/NtuplesData200nb/
+#analysisON_ mmZZ ttbar 94300 /home/gpfs/manip/mnt/cms/mmarionn/ZZNtuples_Pseudo/
+#analysis_ Diboson W_en_PU_TuneZ2 
+analysis_ Diboson ZZ
+############
+

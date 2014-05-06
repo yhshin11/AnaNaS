@@ -1,0 +1,70 @@
+#!/bin/bash
+myself=`readlink -f "$0"`
+mydir=`dirname "$myself"`
+
+unset TMPFILE
+
+
+
+function myexit(){
+  [ -n "$TMPFILE" ] && rm -f "$TMPFILE"
+  exit 0
+}
+
+trap myexit 2 3 13 16
+
+function die(){
+    echo "$0"
+    myexit 1
+}
+
+function check_rootsys(){
+    if [ -z "$ROOTSYS" ]; then
+	which root 1>/dev/null 2>&1
+	if [ $? != 0 ]; then # ROOT environment not set-up
+	    cat <<EOF
+ROOT environment is not set up. Please specify a ROOTSYS path. Shell command can be run by prefixing it with a !, for instance:
+!ls /afs/cern.ch/sw/lcg/app/releases/ROOT
+Type CTRL-C to exit.
+EOF
+	    unset ROOTSYS
+	    while [ -z "$ROOTSYS" ]; do
+		echo -n "ROOTSYS: "
+		read rep
+		sh_cmd=`echo "$rep" | sed -n 's/^!\(.*\)/\1/p'`
+		if [ -n "$sh_cmd" ]; then
+		    eval "$sh_cmd"
+		    continue
+		fi
+		if [ ! -d "$rep" ]; then
+		    echo "$rep is not a directory."
+		    continue
+		fi
+		export ROOTSYS="$rep"
+		PATH="$PATH:$ROOTSYS/bin"
+		export LD_LIBRARY_PATH="$ROOTSYS/lib${LD_LIBRARY_PATH:+:}$LD_LIBRARY_PATH"
+	    done
+	fi
+    fi
+}
+
+#----------- MAIN
+
+check_rootsys
+
+cd "$mydir"
+[ $? = 0 ] || die "Failed to move into directory $mydir."
+
+unset ANANAS #to force setup
+
+curdir="`pwd`"
+
+TMPFILE="`mktemp -t ananas.XXXXXXXXXX`" && {
+        cat  >"$TMPFILE" <<EOF
+source "$HOME/.bashrc"
+cd "$mydir" && { source ./setup; cd "$cudir"; }
+PS1="[ANANAS] \$PS1"
+EOF
+        bash --rcfile "$TMPFILE"
+        rm -f "$TMPFILE"
+}

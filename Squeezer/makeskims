@@ -1,0 +1,130 @@
+#!/bin/bash
+
+# --datasets DATASET1,DATASET1,... --event-list-files EVENTLIST1 EVENTLIST2..
+
+ # Note that we use `"$@"' to let each command-line parameter expand to a
+ # separate word. The quotes around `$@' are essential!
+ # We need TEMP as the `eval set --' would nuke the return value of getopt.
+ temp=`getopt -o hd:l:s:no: --long help,datasets:,event-list-files:,skim-name,dry-run,output-base-dir: \
+      -n 'makeskims' -- "$@"`
+ 
+ if [ $? != 0 ] ; then echo "Terminating..." >&2 ; exit 1 ; fi
+ 
+     # Note the quotes around `$TEMP': they are essential!
+ eval set -- "$temp"
+
+dataout_basedir="$ANANAS/workdir/data"
+
+help(){
+fmt <<EOF
+Usage: makeskims [OPTIONS] --datasets DATASET1[,DATASET2, --event-list-files EVENTLIST1,EVENTLIST2,...
+EVENTLIS2...]
+
+Skim an AnaNaS ntuple, selecting events from a list. This script calls the squeezer command. See squeezer --help.
+
+-d --datasets         DATASET1,DATASET2,...    AnaNaS dataset name. 
+
+-l --event-list-files EVENTLIST1,EVENTLIST2... Ascii file with list of run and event numbers.
+
+-s --skim-name        NAME                     Name added in colleciton name and in .root file names
+
+-o --output-base-dir  DIRECTORY                Directory to write the skimmed file in. A subdirectory is created for each dataset, with the name the dataset name followed by _skim[skim-name] suffix. Default: $dataout_basedir.
+
+-n --dry-run                                   Dry run. Displays what would be executed in a normal run
+
+EOF
+}
+
+unset datasets
+unset eventlists
+unset skimname
+unset VERB
+ while true ; do
+     case "$1" in
+         -h|--help) help; exit 0;;
+         -d|--datasets) datasets="$datasets `echo "$2" | tr , ' '`"; shift 2;;
+         -l|--event-list-files) eventlists="$eventlists `echo "$2" | tr , ' '`"; shift 2;;
+         -s|--skim-name) skimname="$2"; shift 2;;
+         -n|--dry-run) VERB=echo; shift;;
+         -o|--output-base-dir) dataout_basedir="$2"; shift 2;;
+         --) shift ; break ;; #end of options. It remains only the args.
+         *) echo "Internal error!" ; exit 1 ;;
+     esac
+ done
+
+[ -n "$skimname" ] && skimname="_$skimname" 
+
+die(){
+    echo "$*" 1>&2
+    exit 1
+}
+
+[ -n "$datasets" ] ||  die "At least one dataset must be specified. See makeskims --help"
+
+[ -n "$eventlists" ] || die "At least one event list file must be specified. See makeskims --help"
+
+[ -n "$ANANAS" ]  || die "ANANAS environment variable not found. Source the ananas setup file or run  ananashAnaNa"
+
+
+fmt <<EOF
+------------------------------------------------------------------------------
+Skimming dataset(s)s and destinations:
+EOF
+for d in $datasets; do
+    dd="`readlink -m "$dataout_basedir/$d"`"
+    echo "$d" "`dirname "$dd"`/${d}_skim${skimname}"
+done
+
+#   $datasets 
+cat <<EOF
+selecting events specified in:
+   $eventlists
+------------------------------------------------------------------------------
+
+EOF
+
+cleanup(){
+    [ -f $TMPFILE ] && rm $TMPFILE
+}
+
+unset TMPFILE
+
+trap cleanup 0
+
+
+#retrieve file path to the data of a dataset
+#usage datasetdir DATASET_NAME
+#datasetdir(){
+#    dataset="$1"
+#    [ -f "$ANANAS/workdir/config/samples.txt" ] || die "File $ANANAS/workdir/config/samples.txt not found!"
+#    n=`cat "$ANANAS/workdir/config/samples.txt" | awk '{ if($1=="'$dataset'") print $5}' | wc -l`
+#    [ $n -lt 2 ] || die "Error. Several entries found in samples.txt file for the dataset $dataset!"
+#    [ $n -eq 0 ] && die "Data path for dataset $dataset not found in sample.txt sample list"
+#   cat "$ANANAS/workdir/config/samples.txt" | awk '{ if($1=="'$dataset'") printf "%s%s\n",$1,$5}'
+#}
+
+[ -f "$ANANAS/Squeezer/squeezer" ] || die "$ANANAS/Squeezer/squeezer not found!"
+
+# Main
+
+TMPFILE=`mktemp -q /tmp/makeskim.XXXXXX`
+
+cat /dev/null > "$TMPFILE"
+for f in $eventlists; do
+    grep '^[[:digit:]]' "$f" >> "$TMPFILE"
+done
+
+#unset dirs
+#for d in $datasets; do
+#    dirs="$dirs `datasetdir $d`"
+#done
+
+#echo "dirs: $dirs"
+
+for d in $datasets; do
+    dd="`readlink -m "$dataout_basedir/$d"`"
+    destdir="`dirname "$dd"`/${d}_skim${skimname}"
+    [ -d "$destdir" ] || $VERB mkdir "$destdir" || die "Failed to create directory $destdir"
+    find "$ANANAS/workdir/data/$d/" -maxdepth 1 -name \*.root -printf "%f\n" | (while read f; do $VERB "$ANANAS/Squeezer/squeezer" --event-list-from $TMPFILE "$ANANAS/workdir/data/$d/$f" "$destdir/${f%.root}_skim${skimname}.root" ; done)
+done
+

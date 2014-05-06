@@ -1,0 +1,53 @@
+#!/bin/sh
+
+# from Philippe
+function setgcc(){
+        echo $ROOTSYS | grep /afs/cern.ch/sw/lcg/app/releases/ROOT;
+        [ $? = 0 ] || return 1;
+        eval gcc_dir=`cat $ROOTSYS/include/compiledata.h | awk '/#define[[:space:]]*COMPILER[[:space:]]/ {print $3}'`
+        gcc_dir=`dirname $gcc_dir`;     gcc_dir=`dirname $gcc_dir`;
+        #for some reason 4.3.1 and 4.3.2 contains gcc 3.4. Fix it using 4.3.3:
+        #case `basename $gcc_dir` in
+        #    4.3.1|4.3.2) gcc_dir=`readlink -f $gcc_dir/../4.3.3`;;
+        #esac
+
+        gcc_setup=$gcc_dir/setup.sh
+        if [ -d $gcc_dir ];then
+                echo "GCC directory: $gcc_dir"
+                if [ -f $gcc_setup ]; then
+                        source $gcc_setup
+                else   
+                        PATH=$gcc_dir/bin:$PATH
+                        export LD_LIBRARY_PATH=$gcc_dir/lib:$LD_LIBRARY_PATH
+                fi
+        else
+                echo "No gcc matching ROOTSYS found in /afs/cern.ch/sw/lcg/external/gcc!"
+                return 1
+        fi
+}
+
+#source /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.04/x86_64-slc5-gcc43-dbg/root/bin/thisroot.sh
+#source /afs/cern.ch/sw/lcg/app/releases/ROOT/5.32.03/x86_64-slc5-gcc43-dbg/root/bin/thisroot.sh
+
+#/sharesoft/osg/app/cmssoft/cms/slc5_amd64_gcc462/lcg/root/5.34.01-cms2/
+#source /sharesoft/osg/app/cmssoft/cms/slc5_amd64_gcc462/lcg/root/5.34.01-cms2/bin/thisroot.sh
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/sharesoft/osg/app/cmssoft/cms/slc5_amd64_gcc462/lcg/roofit/5.34.01/lib
+export ROOTSYS=$ROOTSYS:/sharesoft/osg/app/cmssoft/cms/slc5_amd64_gcc462/lcg/roofit/5.34.01-cms2
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/sharesoft/osg/app/cmssoft/cms/slc5_amd64_gcc462/lcg/roofit/5.34.01/lib
+
+
+#export XRDPATH=/afs/cern.ch/sw/lcg/external/xrootd/3.1.0p2/x86_64-slc5-gcc43-dbg
+#export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/afs/cern.ch/sw/lcg/external/xrootd/3.1.0p2/x86_64-slc5-gcc43-dbg/lib
+#export PATH=$PATH:/afs/cern.ch/sw/lcg/external/xrootd/3.1.0p2/x86_64-slc5-gcc43-dbg/bin:/usr/lib64
+#echo "gloubi $ROOTSYS"
+#locate libXrdUtils
+#echo "glou"
+#ls /usr/lib64/libXrdUtils.so
+
+#cd /afs/cern.ch/user/m/mmarionn/workspace/private/cmssw/dev535/src/
+#eval `scram runtime -sh`
+#cd -
+#source /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.04/x86_64-slc5-gcc43-dbg/root/bin/thisroot.sh
+
+source ./setup
+#setgcc

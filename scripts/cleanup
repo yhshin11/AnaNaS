@@ -1,0 +1,13 @@
+#!/bin/bash
+rm ${ANANAS}/*~
+rm ${ANANAS}/scripts/*~
+rm ${ANANAS}/workdir/*~
+list=`cat ${ANANAS}/scripts/package_list`
+echo cleanup all packages: $list
+for i in $list; do
+    source ${ANANAS}/scripts/cleanup_package $i
+done 
+
+
+
+

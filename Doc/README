@@ -1,0 +1,55 @@
+//
+//                A n a N a S
+//   Analyse non autorisee de Ntuples a Saclay
+//
+//    Instigator: Gautier Hamel de Monchenault
+
+To retreive the code from CVS
+=============================
+
+Check your CVSROOT variable.
+
+Note: if your CMS CVSROOT is not already setup, 
+
+ export CVSROOT=":ext:<user>@cmscvs.cern.ch:/cvs_server/repositories/CMSSW"
+ export CVS_RSH="ssh"
+
+where <user> is your user id at cern. This can go in your .bashrc file.
+You'll have to enter your password at each cvs operation.
+
+From the location where you want to install the code
+
+> cvs co -d AnaNaS UserCode/GautierHdeM/AnaNaS
+
+To build the applications
+=========================
+
+- > cd AnaNaS
+- AnaNaS> source setup
+        (switch to bash shell if needed))
+
+Note: you'll get a warning message if the workdir/data link is not set up.
+This is the link to the location of data files on your system.
+- AnaNaS> cd workdir
+- AnaNaS/workdir> ln -sf <someBigDisk>/<theDataTopDirectory> data
+
+For instance (as of sept 09) to access version v02 of ntuples on dapint:
+
+- AnaNaS/workdir> ln -sf /home/gpfs/manip/mnt/cms/mmarionn/data/v02 data
+
+To build the applications
+
+- AnaNaS/workdir> build
+(this command can be issued from anywhere)
+
+To run the Analysis
+===================
+
+- AnaNaS/workdir> analysis -a <analysis> -s <sample> -n <nevent>
+(this command can be issued from anywhere)
+
+To run the Display
+==================
+
+- AnaNaS/workdir> display -f <file.root>
+(this command can be issued from anywhere)

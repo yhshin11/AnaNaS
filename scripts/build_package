@@ -1,0 +1,8 @@
+#!/bin/bash
+pack=$1; shift;
+echo build package $pack
+cd ${ANANAS}/$pack
+make "$@"
+code=$?
+cd ../
+[[ $code == "0" ]] || exit $code

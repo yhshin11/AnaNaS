@@ -1,0 +1,12 @@
+
+universe = vanilla
+Executable = /home/mmarionn/AnaNaS/scripts/singleJobCondor.sh
+getenv = True
+Should_Transfer_Files = NO
+Output = /home/mmarionn/AnaNaS/scripts/logsProd/logOut_0.log
+Error = /home/mmarionn/AnaNaS/scripts/logsProd/logErr_0.log
+Log = /home/mmarionn/AnaNaS/scripts/logsProd/log_0.log
+notify_user = matthieu.marionneau@cern.ch
+Arguments = /hadoop/store/user/mmarionn/MET/Prod8TeV_v1 ZJets_2l Ntuple_1002_0_2lD.root MET /data/users/mmarionn/MET/ANSNtuplesv1 /home/mmarionn/AnaNaS
+Queue 1
+

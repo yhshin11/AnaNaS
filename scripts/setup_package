@@ -1,0 +1,5 @@
+#!/bin/bash
+echo setup package $1
+cd ${ANANAS}/$1
+source ./setup.sh
+cd ../

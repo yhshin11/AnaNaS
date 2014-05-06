@@ -1,0 +1,17 @@
+# Source files to compile 
+FILES := ZllAnalysis 
+FILES += DibosonAnalysis
+FILES += AnalysisFactory
+FILES += OfficialWAnalysis
+FILES += OfficialZAnalysis
+FILES += Commissioning
+FILES += WAnalysis
+FILES += MinBias
+FILES += ComputeBias
+#FILES += DiphotonAnalysis
+#FILES += DYContamination
+#FILES += MCAnalysis
+
+# Header files to use for dictionary generation
+DICTFILES := $(FILES) LinkDef
+

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# from Philippe
+function setgcc(){
+        echo $ROOTSYS | grep /afs/cern.ch/sw/lcg/app/releases/ROOT;
+        [ $? = 0 ] || return 1;
+        eval gcc_dir=`cat $ROOTSYS/include/compiledata.h | awk '/#define[[:space:]]*COMPILER[[:space:]]/ {print $3}'`

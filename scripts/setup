@@ -1,0 +1,48 @@
+if [ -z $ANANAS ]; then
+
+export ANANAS=${PWD}
+echo ANANAS=${ANANAS}
+export PATH=${ANANAS}/scripts:${PATH}
+if [ -z $ROOTSYS ]; then
+    echo "----------------------------------------------"
+    echo "Warning ROOTSYS is not yet defined."
+    echo "If you do not have a user independent"
+    echo "ROOT installation, please set ROOTSYS."
+    echo "Do not expect a working environment otherwise."
+    echo "----------------------------------------------"
+    #return
+else    
+    echo "ROOTSYS="$ROOTSYS
+fi
+pkglist=${ANANAS}/scripts/package_list
+echo MECore > $pkglist
+echo `cat $pkglist` Analysis > $pkglist
+echo `cat $pkglist` Display  > $pkglist
+list=`cat $pkglist`
+echo setup all packages: $list
+for i in $list; do
+   source ${ANANAS}/scripts/setup_package $i
+done
+
+list="root hist config ps log"
+for i in $list; do
+if [ -d ${ANANAS}/workdir/$i ]; then
+    echo "workdir/$i directory exists"
+else
+    mkdir ${ANANAS}/workdir/$i
+fi
+done
+
+if [ -d ${ANANAS}/workdir/data ]; then
+    echo "workdir/data link exists"
+else
+    echo "link workir/data does not exist -- please set it."
+    echo "-- data is a link to the location of ntuple files --"
+fi
+
+
+fi 
+
+
+
+

@@ -1,0 +1,147 @@
+# Default collections are indicated with a `*' as suffix of their name
+
+[isMC]
+
+[PFCandidates]
+  highPt*
+#  lowPt
+
+[CaloJets]
+  ak5CaloJets*
+
+[PFJets]
+  ak5PFJets*
+  ak5PFJetsL1FastL2L3
+  ak5PFJetsL1FastL2L3Residual
+
+[TrackJets]
+  ak5TrackJets*
+
+[GenJets]
+  ak5GenJets*
+
+[CaloMET] 
+ met*
+ caloType1CorrectedMet
+ caloType1CorrectedMetJetEnDown
+ caloType1CorrectedMetJetEnUp
+ caloType1CorrectedMetUnclusteredEnDown
+ caloType1CorrectedMetUnclusteredEnUp
+# caloType1p2CorrectedMet
+
+[RecoMET]
+  tcMet*
+
+[PFMET]
+  pfMet*
+  pfType1CorrectedMet
+  pfType1p2CorrectedMet
+  smearedPFType1CorrectedMetRECO
+  pfType1PhiCorrectedMet
+  pfType1p0CorrectedMet
+  pfType1p0PhiCorrectedMet
+  pfType1p0p2CorrectedMet
+  pfType1p0p2PhiCorrectedMet
+  smearedPFType1PhiCorrectedMetRECO
+  smearedPFType1p0CorrectedMetRECO
+  smearedPFType1p0PhiCorrectedMetRECO
+  noPileUpPFMEt
+  pfMEtMVA
+
+[PatMET]
+  caloType1CorrectedMet
+  caloType1CorrectedMetJetEnDown
+  caloType1CorrectedMetJetEnUp
+  caloType1CorrectedMetUnclusteredEnDown
+  caloType1CorrectedMetUnclusteredEnUp
+  caloType1p2CorrectedMet
+  patPFMetSmeared
+  patType1CorrectedPFMetSmeared
+  patType1CorrectedPFMetElectronEnDownSmeared
+  patType1CorrectedPFMetElectronEnUpSmeared
+  patType1CorrectedPFMetJetEnDownSmeared
+  patType1CorrectedPFMetJetEnUpSmeared
+  patType1CorrectedPFMetJetResDownSmeared
+  patType1CorrectedPFMetJetResUpSmeared
+  patType1CorrectedPFMetMuonEnDownSmeared
+  patType1CorrectedPFMetMuonEnUpSmeared
+  patType1CorrectedPFMetTauEnDownSmeared
+  patType1CorrectedPFMetTauEnUpSmeared
+  patType1CorrectedPFMetUnclusteredEnDownSmeared
+  patType1CorrectedPFMetUnclusteredEnUpSmeared
+  patPFMetMVASmeared
+  patPFMetMVAElectronEnDownSmeared
+  patPFMetMVAElectronEnUpSmeared
+  patPFMetMVAJetEnDownSmeared
+  patPFMetMVAJetEnUpSmeared
+  patPFMetMVAJetResDownSmeared
+  patPFMetMVAJetResUpSmeared
+  patPFMetMVAMuonEnDownSmeared
+  patPFMetMVAMuonEnUpSmeared
+  patPFMetMVATauEnDownSmeared
+  patPFMetMVATauEnUpSmeared
+  patPFMetMVAUnclusteredEnDownSmeared
+  patPFMetMVAUnclusteredEnUpSmeared
+  patPFMetMVAUnitySmeared
+  patPFMetMVAElectronEnDownUnitySmeared
+  patPFMetMVAElectronEnUpUnitySmeared
+  patPFMetMVAJetEnDownUnitySmeared
+  patPFMetMVAJetEnUpUnitySmeared
+  patPFMetMVAJetResDownUnitySmeared
+  patPFMetMVAJetResUpUnitySmeared
+  patPFMetMVAMuonEnDownUnitySmeared
+  patPFMetMVAMuonEnUpUnitySmeared
+  patPFMetMVATauEnDownUnitySmeared
+  patPFMetMVATauEnUpUnitySmeared
+  patPFMetMVAUnclusteredEnDownUnitySmeared
+  patPFMetMVAUnclusteredEnUpUnitySmeared
+  patPFMetNoSmear
+  patType1CorrectedPFMetNoSmear
+  patType1CorrectedPFMetElectronEnDownNoSmear
+  patType1CorrectedPFMetElectronEnUpNoSmear
+  patType1CorrectedPFMetJetEnDownNoSmear
+  patType1CorrectedPFMetJetEnUpNoSmear
+  patType1CorrectedPFMetJetResDownNoSmear
+  patType1CorrectedPFMetJetResUpNoSmear
+  patType1CorrectedPFMetMuonEnDownNoSmear
+  patType1CorrectedPFMetMuonEnUpNoSmear
+  patType1CorrectedPFMetTauEnDownNoSmear
+  patType1CorrectedPFMetTauEnUpNoSmear
+  patType1CorrectedPFMetUnclusteredEnDownNoSmear
+  patType1CorrectedPFMetUnclusteredEnUpNoSmear
+  patPFMetMVANoSmear
+  patPFMetMVAElectronEnDownNoSmear
+  patPFMetMVAElectronEnUpNoSmear
+  patPFMetMVAJetEnDownNoSmear
+  patPFMetMVAJetEnUpNoSmear
+  patPFMetMVAJetResDownNoSmear
+  patPFMetMVAJetResUpNoSmear
+  patPFMetMVAMuonEnDownNoSmear
+  patPFMetMVAMuonEnUpNoSmear
+  patPFMetMVATauEnDownNoSmear
+  patPFMetMVATauEnUpNoSmear
+  patPFMetMVAUnclusteredEnDownNoSmear
+  patPFMetMVAUnclusteredEnUpNoSmear
+  patPFMetMVAUnityNoSmear
+  patPFMetMVAElectronEnDownUnityNoSmear
+  patPFMetMVAElectronEnUpUnityNoSmear
+  patPFMetMVAJetEnDownUnityNoSmear
+  patPFMetMVAJetEnUpUnityNoSmear
+  patPFMetMVAJetResDownUnityNoSmear
+  patPFMetMVAJetResUpUnityNoSmear
+  patPFMetMVAMuonEnDownUnityNoSmear
+  patPFMetMVAMuonEnUpUnityNoSmear
+  patPFMetMVATauEnDownUnityNoSmear
+  patPFMetMVATauEnUpUnityNoSmear
+  patPFMetMVAUnclusteredEnDownUnityNoSmear
+  patPFMetMVAUnclusteredEnUpUnityNoSmear
+  patMETsPF*
+
+
+[GenMET]
+  genMetTrue*
+  genMetCalo
+  genMetCaloAndNonPrompt
+
+
+

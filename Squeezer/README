@@ -1,0 +1,25 @@
+Squeezer application, a utility to copy and skim AnaNaS n-tuple files
+---------------------------------------------------------------------
+
+Author: Ph. Gras CEA/IRFU Saclay
+Jan. 3, 11
+
+Build the code:
+---------------
+make clean
+make
+
+Usage:
+-----
+
+Either use the default squeezer application or make your own code based on the CopyAnaTuple class.
+
+To get help on the squeezer application, execute: 
+squeezer --help to get help. 
+
+See also makeskims --help. The program squeezer processes single input files. The makeksims uses the squeezer program
+to process every file of one or several samples in one go.
+
+
+When producing a data skim with squeezer application, the list of events is provided as an ascii file containing the run and event numbers.
+

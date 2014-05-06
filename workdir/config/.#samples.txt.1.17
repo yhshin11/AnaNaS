@@ -1,0 +1,37 @@
+//
+// sample				nEvt	L(/pb)	filt  collection		  comment
+//
+data2012A/DoubleElectron_190450_193686	1223603 710.61	0.155 Run2012A-PromptReco-v1/AOD  data
+data2012A/DoubleMu_190450_193686	1374849 710.61	0.386 Run2012A-PromptReco-v1/AOD  data
+data2012A/MuEG_190450_193686		 599926	710.61	0.369 Run2012A-PromptReco-v1/AOD  data
+
+data2012B/DoubleElectron_193752_194076	 304463	209.43	0.280 Run2012B-PromptReco-v1/AOD  data
+data2012B/DoubleMu_193752_194076	 425208 209.43	0.504 Run2012B-PromptReco-v1/AOD  data
+data2012B/MuEG_193752_194076		 205174 209.43	0.326 Run2012B-PromptReco-v1/AOD  data
+
+data2012B/DoubleElectron_194077_194479	 992550  90.00	0.286 Run2012B-PromptReco-v1/AOD  data
+data2012B/DoubleMu_194077_194479	1499282  90.00	0.503 Run2012B-PromptReco-v1/AOD  data
+data2012B/MuEG_194077_194479		 752955  90.00	0.335 Run2012B-PromptReco-v1/AOD  data
+
+Summer12/Z_2e 1000000 1700.00 1.000 data data 
+Summer12/Z_2m 1905016 1700.00 1.000 data data 
+Summer12/Z_2t  147095 1700.00 0.060 data data 
+
+Summer12/Z_2e_lowPU 2297045 1700.00 1.000 data data 
+Summer12/Z_2m_lowPU  982507 1700.00 1.000 data data 
+
+Summer12/ZJets_2l 2916653 1700.00 1.000 data data 
+
+Summer12/WW_2l2n   499122 1700.00 1.000 data data 
+Summer12/WZ_3ln	   956080 1700.00 1.000 data data 
+Summer12/ZZ_2l2n   497920 1700.00 1.000 data data 
+Summer12/ZZ_4l	  4989540 1700.00 1.000 data data 
+
+Summer12/WWJets_2l2n 1933235 1700.00 1.000 data data 
+Summer12/ZZJets_4l   5631916 1700.00 1.000 data data 
+
+Summer12/ZZ_2e2t   823911 1700.00 1.000 data data 
+Summer12/ZZ_2m2t   823922 1700.00 1.000 data data 
+Summer12/ZZ_4e	  1499093 1700.00 1.000 data data 
+Summer12/ZZ_4m	  1476065 1700.00 1.000 data data 
+

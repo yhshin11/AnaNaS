@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Gets total number of events in Ntuple_*.root AnaNaS files in current directory.
+#
+# This script needs the ROOT macro aaaEvtCnt.C. The macro must be located in the
+# directory this script is located in.
+#
+# Use -v (verbose) option to list event count details
+#
+# author: Ph Gras CEA/IRFU Saclay 2010-04-82
+
+myself=`readlink -f $0`
+mydir=`dirname $myself`
+
+die(){
+    echo "$@" 1>&2
+    exit 1
+}
+
+verb=n
+[ "X$1" = X-v ] && verb=y 
+
+shopt -s nullglob
+
+export nevts=0
+for f in Ntuple_*.root; do
+    n=`root -b -n -q "$mydir/aaaEvtCnt.C(\"$f\")" | tail -n 1`
+    echo "$n" | grep -q '^[[:digit:]]\+$'
+    [ $? = 0 ] || die "Failed to get number of events in file $f!" 
+    [ "X$verb" = Xy ] && echo "$f: $n events"
+    nevts=$((nevts+n))
+done
+[ "X$verb" = Xy ] && echo -n "Total: "
+echo $nevts

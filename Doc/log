@@ -1,0 +1,28 @@
+mardi 21 juillet 2009, 11:19:13 (UTC+0200)
+------------------------------------------
+
+Simplify class names and arborescence
+
+20 juillet 2009
+---------------
+
+First version with dependency on MusEcal. Necessitates to have a working MusEcal
+> cd MusEcal
+> source ./setup
+> cd ../SacAnalysis
+> source ./setup
+> build
+Works but not very convenient (--> SacAnalysis_200709.tar).
+To avoid the complication: copy needed MusEcal classes in SacDisplay/src.
+Note, the first solution can be recovered by:
+- uncommenting "#ghm" in scripts/setup, SacDisplay/setup.sh, SacDisplay/Makefile
+- removing ME* classes from SacDisplay/src, SacDisplay/src/module.mk, SacDisplay/src/LinkDef.h
+- cleaning up and rebuilding
+
+19 juillet 2009
+---------------
+
+From MEAnalysis -> SacAnalysis
+Put all the packages in SacAnalysis
+List of packages in scripts/package_list
+Modify scripts

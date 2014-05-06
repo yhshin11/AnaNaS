@@ -1,0 +1,6 @@
+#!/bin/bash
+list=`cat ${ANANAS}/scripts/package_list`
+echo build all packages: $list
+for i in $list; do
+    source ${ANANAS}/scripts/build_package $i "$@"
+done 
