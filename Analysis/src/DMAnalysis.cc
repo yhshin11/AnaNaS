@@ -85,7 +85,7 @@ bool
 DMAnalysis::analyzeEvent()
 {
   int eventIndex = _ievt;
-  if(eventIndex % 10000 == 0) {
+  if(eventIndex % 1000 == 0) {
 	  cout << "Analyzing event " << eventIndex << endl;
   }
   
@@ -99,7 +99,7 @@ DMAnalysis::analyzeEvent()
   int nElectrons, nMuons;
   nElectrons = Electrons.size();
   nMuons = Muons.size();
-  Candidate *l1, *l2, *l3;
+  Candidate *l1, *l2;
   // Lepton variables to store.
   bool boolTightIso_l1 = false;
   int pdgCode_l1 = 0;
@@ -109,11 +109,6 @@ DMAnalysis::analyzeEvent()
   int pdgCode_l2 = 0;
   float pt_l2, eta_l2, phi_l2, charge_l2;
   pt_l2 = eta_l2 = phi_l2 = charge_l2 = 0;
-  // Third lepton variables.
-  bool boolLepton3 = false;
-  bool boolLepton3Loose = false;
-  int pdgCode_l3 = 0;
-
 
   Candidate* ZCand;
   // Z candidate variables to store.
@@ -129,9 +124,6 @@ DMAnalysis::analyzeEvent()
 	  if (boolTightIso_l1 && boolTightIso_l2) {
 		  boolValidZ = true;
 		  _zChan = 1;
-		  // Check if third lepton exists.
-		  if (nElectrons > 2) {boolLepton3 = true; l3 = Electrons[2]; ElectronSel.accept(*l3);}
-		  else if (nMuon > 0) {boolLepton3 = true; l3 = Muons[0]; MuonSel.accept(*l3);}
 	  }
   }
   if ( nMuons >= 2 && !boolValidZ ) {
@@ -143,9 +135,6 @@ DMAnalysis::analyzeEvent()
 	  if (boolTightIso_l1 && boolTightIso_l2) {
 		  boolValidZ = true;
 		  _zChan = 0;
-		  // Check if third lepton exists.
-		  if (nMuons > 2) {boolLepton3 = true; l3 = Muons[2]; MuonSel.accept(*l3);}
-		  else if (nElectron > 0) {boolLepton3 = true; l3 = Electrons[0]; ElectronSel.accept(*l3);}
 	  }
   }
   if (!boolValidZ) {
@@ -168,10 +157,6 @@ DMAnalysis::analyzeEvent()
 	pt_ll = ZCand->pt();
 	phi_ll = ZCand->phi();
 	y_ll = getRapidity(ZCand);
-	if (boolLepton3) {
-		boolLepton3Loose = l3->info->getBool("Loose") && l3->info->getBool("isPt10");
-		pdgCode_l3 = l3->pdgCode();
-	}
 
   }
   
@@ -196,16 +181,48 @@ DMAnalysis::analyzeEvent()
   tm.add<float>("phi_l2", &phi_l2);
   tm.add<float>("charge_l2", &charge_l2);
 
-  tm.add<bool>("boolLepton3", &boolLepton3);
-  tm.add<bool>("boolLepton3Loose", &boolLepton3Loose);
-  tm.add<int>("pdgCode_l3", &pdgCode_l3);
-
   tm.add<bool>("boolValidZ", &boolValidZ);
   tm.add<float>("m_ll", &m_ll);
   tm.add<float>("pt_ll", &pt_ll);
   tm.add<float>("phi_ll", &phi_ll);
   tm.add<float>("y_ll", &y_ll);
   //XXX hist_mll->Fill(m_ll);
+
+  // Save additional leptons information. (PDG ID and Loose boolean)
+  vector<int> *pdgCode_addLeptons = new vector<int>;
+  vector<float> *pt_addLeptons = new vector<float>;
+  vector<float> *eta_addLeptons = new vector<float>;
+  vector<float> *phi_addLeptons = new vector<float>;
+  vector<bool> *Loose_addLeptons = new vector<bool>;
+  for(int unsigned il=0;il<Electrons.size();il++) {
+	  Candidate* lepton = Electrons[il];
+	  if (lepton != l1 && lepton != l2 && lepton->pt() > 10) {
+		ElectronSel.accept(*lepton);
+		pdgCode_addLeptons->push_back(lepton->pdgCode());
+		pt_addLeptons->push_back(lepton->pt());
+		eta_addLeptons->push_back(lepton->eta());
+		phi_addLeptons->push_back(lepton->phi());
+		bool boolLoose = lepton->info()->getBool("Loose");
+		Loose_addLeptons->push_back(boolLoose);
+	  }
+  }
+  for(int unsigned il=0;il<Muons.size();il++) {
+	  Candidate* lepton = Muons[il];
+	  if (lepton != l1 && lepton != l2 && lepton->pt() > 10) {
+		MuonSel.accept(*lepton);
+		pdgCode_addLeptons->push_back(lepton->pdgCode());
+		pt_addLeptons->push_back(lepton->pt());
+		eta_addLeptons->push_back(lepton->eta());
+		phi_addLeptons->push_back(lepton->phi());
+		bool boolLoose = lepton->info()->getBool("Loose");
+		Loose_addLeptons->push_back(boolLoose);
+	  }
+  }
+  tm.add<vector<int>*>("pdgCode_addLeptons", &pdgCode_addLeptons);
+  tm.add<vector<float>*>("pt_addLeptons", &pt_addLeptons);
+  tm.add<vector<float>*>("eta_addLeptons", &eta_addLeptons);
+  tm.add<vector<float>*>("phi_addLeptons", &phi_addLeptons);
+  tm.add<vector<bool>*>("Loose_addLeptons", &Loose_addLeptons);
 
   // Retrieve jets.
   const CandList& Jets = _e.jetList( EventManager::kPatJet);
