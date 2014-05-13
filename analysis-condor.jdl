@@ -1,0 +1,10 @@
+universe = vanilla
+Executable = ./analysis-condor.sh
+should_transfer_files = NO
+notify_user = 
+Output = PREFIX_NAME/$(cluster)_$(process)_SAMPLE_NAME.stdout
+Error  = PREFIX_NAME/$(cluster)_$(process)_SAMPLE_NAME.stderr
+Log    = PREFIX_NAME/$(cluster)_$(process)_SAMPLE_NAME.condor
+Arguments = RUN_DIR SAMPLE_NAME
+Queue 1
+

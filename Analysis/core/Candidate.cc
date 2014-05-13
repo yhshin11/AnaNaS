@@ -191,7 +191,10 @@ Candidate::create( const TVector3& mom,
   // cout<<pdgId<<endl;
   const TParticlePDG* pdt_ 
     = ParticleData::Table()->GetParticle( pdgId );
-  assert( pdt_!=0 );
+  // assert( pdt_!=0 );
+  //FIXME YHS
+  if (pdt_ == 0)
+	  cout << "pdgId of " << pdgId << " not recognized" << endl;
   return create( mom, *pdt_, vtx ); 
 }
 

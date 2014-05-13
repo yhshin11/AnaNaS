@@ -1,0 +1,10 @@
+universe = vanilla
+Executable = ./analysis-condor.sh
+should_transfer_files = NO
+notify_user = 
+Output = /data/users/yhshin/condor/AnaNaS/$(cluster)_$(process).stdout
+Error  = /data/users/yhshin/condor/AnaNaS/$(cluster)_$(process).stderr
+Log    = /data/users/yhshin/condor/AnaNaS/$(cluster)_$(process).condor
+Arguments = /home/yhshin/CMSSW_5_3_9_patch3/src/AnaNaS T_tWchan
+Queue 1
+
