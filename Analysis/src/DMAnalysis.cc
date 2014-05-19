@@ -138,7 +138,7 @@ DMAnalysis::analyzeEvent()
 	  }
   }
   if (!boolValidZ) {
-	  cout << "no Z candidate in this event" << endl;
+	  //cout << "no Z candidate in this event" << endl;
   }
   if (boolValidZ) {
 	pdgCode_l1 = l1->pdgCode();

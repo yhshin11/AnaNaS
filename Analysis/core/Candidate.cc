@@ -186,7 +186,7 @@ Candidate::create( const TVector3& mom,
 		   Vertex* vtx )
 { 
   //FIXME MM
-  if(pdgId==4414 || pdgId==4434)
+  if(pdgId==4414 || pdgId==4424 || pdgId==4434 || pdgId==5242)
     {pdgId=445;}
   // cout<<pdgId<<endl;
   const TParticlePDG* pdt_ 
