@@ -1,5 +1,7 @@
 *      type        name                 id  mass/GeV width/GeV max_Dm/GeV 3*charge 2*spin lifetime*c/mm Lund-KC
 *
+add  p Special     wimp              1000022  0               0       0       0       2       0 0
+add  p Special     anti-wimp              -1000022  0               0       0       0       2       0 0
 add  p Parton      d                     1  0.0099          0       0       -1      1       0 1
 add  p Parton      anti-d               -1  0.0099          0       0       1       1       0 0
 add  p Parton      u                     2  0.0056          0       0       2       1       0 2

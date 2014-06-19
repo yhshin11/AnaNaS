@@ -2,9 +2,9 @@ universe = vanilla
 Executable = ./analysis-condor.sh
 should_transfer_files = NO
 notify_user = 
-Output = /data/users/yhshin/condor/AnaNaS/$(cluster)_$(process).stdout
-Error  = /data/users/yhshin/condor/AnaNaS/$(cluster)_$(process).stderr
-Log    = /data/users/yhshin/condor/AnaNaS/$(cluster)_$(process).condor
-Arguments = /home/yhshin/CMSSW_5_3_9_patch3/src/AnaNaS Tbar_schan
+Output = /data/users/yhshin/condor/AnaNaS/2014-06-19-1142/$(cluster)_$(process)_Tbar_schan.stdout
+Error  = /data/users/yhshin/condor/AnaNaS/2014-06-19-1142/$(cluster)_$(process)_Tbar_schan.stderr
+Log    = /data/users/yhshin/condor/AnaNaS/2014-06-19-1142/$(cluster)_$(process)_Tbar_schan.condor
+Arguments = /home/yhshin/CMSSW_5_3_9_patch3/src/AnaNaS Tbar_schan /data/users/yhshin/DMSkims/2014-06-19-1142/Tbar_schan/
 Queue 1
 

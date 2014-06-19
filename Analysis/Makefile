@@ -37,6 +37,7 @@ LD         := g++
 OUTPUTOPT  := -o
 OPTFLAGS   := -g -O0 -Wall -fPIC -Wno-deprecated
 CXXFLAGS   := $(OPTFLAGS)
+CXXFLAGS   += -std=c++0x
 LDFLAGS    := -shared
 LIBS       :=
 

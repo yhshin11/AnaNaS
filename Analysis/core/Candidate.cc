@@ -193,8 +193,12 @@ Candidate::create( const TVector3& mom,
     = ParticleData::Table()->GetParticle( pdgId );
   // assert( pdt_!=0 );
   //FIXME YHS
-  if (pdt_ == 0)
+  // PDG codes for some baryons are not contained in the pdt.table.
+  // Temporary fix: If pdgId is not recognized, force it to be 445 (charm meson, no particular reason).
+  if (pdt_ == 0) {
+	  pdt_ = ParticleData::Table()->GetParticle( 445 );
 	  cout << "pdgId of " << pdgId << " not recognized" << endl;
+	}
   return create( mom, *pdt_, vtx ); 
 }
 

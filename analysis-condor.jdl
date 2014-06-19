@@ -5,6 +5,6 @@ notify_user =
 Output = PREFIX_NAME/$(cluster)_$(process)_SAMPLE_NAME.stdout
 Error  = PREFIX_NAME/$(cluster)_$(process)_SAMPLE_NAME.stderr
 Log    = PREFIX_NAME/$(cluster)_$(process)_SAMPLE_NAME.condor
-Arguments = RUN_DIR SAMPLE_NAME
+Arguments = RUN_DIR SAMPLE_NAME TARGET_DIR
 Queue 1
 
